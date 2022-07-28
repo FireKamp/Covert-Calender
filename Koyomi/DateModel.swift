@@ -8,13 +8,14 @@
 
 import UIKit
 
-public enum MonthType { case previous, current, next }
+public enum MonthType { case previous, current, next, custom }
 
-final class DateModel: NSObject {
+public final class DateModel: NSObject {
     
     // Type properties
     static let dayCountPerRow = 7
     static let maxCellCount   = 42
+    public static var addedMonths = 0
     
     // Week text
     var weeks: (String, String, String, String, String, String, String) = ("SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT")
@@ -347,6 +348,7 @@ private extension DateModel {
             case .previous: return -1
             case .current:  return 0
             case .next:     return 1
+            case .custom:   return DateModel.addedMonths
             }
         }()
         return calendar.date(byAdding: components, to: currentDate) ?? Date()
